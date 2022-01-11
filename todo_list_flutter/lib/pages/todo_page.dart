@@ -23,6 +23,7 @@ class TodoPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(60),
@@ -31,8 +32,10 @@ class TodoPage extends StatelessWidget {
             ),
             context: context,
             builder: (BuildContext context) {
-              return FormTarefa(
-                  titulo: "Adicionar nova tarefa", tituloBotao: "Criar");
+              return SingleChildScrollView(
+                child: FormTarefa(
+                    titulo: "Adicionar nova tarefa", tituloBotao: "Criar"),
+              );
             },
           );
         },
@@ -89,7 +92,21 @@ void exibirDialogoExcluirTarefa(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text("teste"),
+      title: Text("Deseja excluir a tarefa?"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Sim"),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Não"),
+        ),
+      ],
     ),
   );
 }
@@ -105,10 +122,13 @@ RoundedRectangleBorder getShapeFormTarefa() {
 
 void showFormAtualizarTarefa(BuildContext context) {
   showModalBottomSheet(
+    isScrollControlled: true,
     shape: getShapeFormTarefa(),
     context: context,
     builder: (BuildContext context) {
-      return FormTarefa(titulo: "Atualizar tarefa", tituloBotao: "Atualizar");
+      return SingleChildScrollView(
+          child:
+              FormTarefa(titulo: "Atualizar tarefa", tituloBotao: "Atualizar"));
     },
   );
 }
